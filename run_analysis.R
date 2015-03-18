@@ -3,32 +3,24 @@
 ## coursera, Getting and Cleaning Data, getdata-012
 ## course project - Patrick Charles
 ##
-if(!require(dplyr)){
+if(!require(dplyr)) {
     install.packages("dplyr")
     library(dplyr)
 }
 
-## An R script that does the following:
-##  * Merges the training and the test sets to create one data set.
-##  * Extracts only the measurements on the mean and standard deviation for each measurement.
-##  * Uses descriptive activity names to name the activities in the data set
-##  * Appropriately labels the data set with descriptive variable names.
-##  * From the data set in step 4, creates a second, independent tidy data set
-##      with the average of each variable for each activity and each subject.
-
-## key principles
-##  - one variable of measurement per column
-##  - one observation per row
-
 ## transform and clean human activity recognition dataset
 ##
-## this function accepts five dataframes
+## this function accepts five dataframes, populated from the raw data sources
 ##   activities - a cross-reference between activity ids and names
 ##   features - the elements of the fine-grain features being measured
 ##   dataSet - the feature data set
 ##   activitySet - the activity type data set
 ##   subjectSet - the subject id data set
-readAndCleanActivityData <- function(activities, features, dataSet, activitySet, subjectSet) {
+##
+## this function outputs a single tidy data set
+##
+readAndCleanActivityData <- function(activities, features,
+                                     dataSet, activitySet, subjectSet) {
     ## clean up the feature type column labels
     features$V2 <- gsub("-", ".", features$V2) # replace -'s with .'s
 
@@ -67,14 +59,16 @@ train.subjectSet <- read.csv("UCI HAR Dataset/train/subject_train.txt", header=F
 train.cleanSet = readAndCleanActivityData(activities, features,
     train.dataSet, train.activitySet, train.subjectSet)
 
-## merge the test and training clean data sets
+## (1) merge the test and training clean data sets to create one data set
 merged.cleanSet = rbind(train.cleanSet, test.cleanSet)
 
-## (5) create an independent tidy data set with the average of each variable for each activity and each subject
+## (5) create an independent tidy data set with the average of each variable for
+##     each activity and each subject
 tidySet.meansByActivityAndSubject <- # using a dplyr pipeline
     tbl_df(merged.cleanSet) %>%  # convert to tbl_df
         group_by(subject.id, activity.type) %>% # group by subject and activity
             summarise_each(funs(mean)) # calculate the averages
 
 ## write the new tidy data set to disk
-write.table(tidySet.meansByActivityAndSubject, file="meansByActivityAndSubject.txt")
+write.table(tidySet.meansByActivityAndSubject,
+            file="meansByActivityAndSubject.txt")

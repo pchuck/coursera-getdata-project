@@ -17,18 +17,4 @@ clean_data:
 	./run_analysis.R
 
 
-# README.txt - docs
-# data files
-#   X_
-#   y_
-#   subject_test - subject identifiers
-# activity_labels.txt
-#   1 WALKING
-#   2 WALKING_UPSTAIRS
-#   3 WALKING_DOWNSTAIRS
-#   4 SITTING
-#   5 STANDING
-#   6 LAYING
-# features - 561 variables
-# features_info - description of the process
 
