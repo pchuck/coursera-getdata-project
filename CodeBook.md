@@ -4,7 +4,7 @@ This codebook describes the data, variables, and transformation performed to cre
 
 ## Variables
 
-The variables used in the raw human activity data set are enumerated in several refernce files:
+The variables used in the raw human activity data set are enumerated in several reference files:
 
 * 'features_info.txt' - Shows information about the variables used on the feature vector.
 * 'features.txt' - List of all features.
@@ -31,11 +31,13 @@ Following the principles of tidy data, the following transformations are applied
 
 * The training and test data sets are merged
 * Descriptive names are associated with the activities in the data set
-* Labels are applied with associated variable names
+* Labels are applied using associated variable names
 * Subject ids are associated with corresponding feature data
-* A new tidy data set is produced and the key features summarized
+* A new tidy data set is produced and the key features summarized (means and std deviations)
 
 ## Output
+
+A final separate tidy dataset is produced which summarizes the data by activity and subject, calculating averages for each across each variable.
 
 Running the script run_analysis.R produces the tidy data set meansByActivityAndSubject.txt.
 
